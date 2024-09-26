@@ -20,6 +20,7 @@ A Online Course website for practice.
 - Create project folder.
 - Initialize porject - `npm init -y`
 - Install dependencies - `npm install express jsonwebtoken mongoose zod`
+- Run the app - `node --env-file .env index.js`
 
 ## Steps
 

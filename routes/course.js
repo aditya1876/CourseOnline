@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const courseRouter = Router();
+const { CoursesCollection } = require("../db");
 
 //following route can be accessed using http://localhost:port/course/all-courses
 courseRouter.get("/all-courses", function (req, res) {

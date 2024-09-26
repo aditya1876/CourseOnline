@@ -1,6 +1,6 @@
 const { Router } = require("express");
-
 const userRouter = Router();
+const { UserConneciton } = require("../db");
 
 //following route can be accessed using http://localhost:port/user/signup
 userRouter.post("/signup", function (req, res) {

@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const adminRouter = Router();
+const { AdminCollection } = require("../db");
 
 //following route can be accessed using http://localhost:port/admin/signup
 adminRouter.post("/signup", function (req, res) {

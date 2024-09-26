@@ -1,4 +1,5 @@
 const express = require("express");
+const mongoose = require("mongoose");
 
 //routers
 const { userRouter } = require("./routes/user");
@@ -12,8 +13,16 @@ app.use("/api/v1/user", userRouter);
 app.use("/api/v1/course", courseRouter);
 app.use("/api/v1/admin", adminRouter);
 
-//LISTEN
-const PORT = 3000;
-app.listen(PORT, () => {
-  console.log(`Server started on port [${PORT}]`);
-});
+//Do mandatory steps that should complete before starting the app here
+async function main() {
+  //CONNECT TO DATABASE
+  await mongoose.connect(process.env.MONGODB_CONNECTION_STRING);
+  console.log(`Successfully connected to DB.`);
+
+  //LISTEN
+  app.listen(process.env.PORT, () => {
+    console.log(`Server started on port: [${process.env.PORT}]`);
+  });
+}
+
+main();
