@@ -3,9 +3,28 @@ const userRouter = Router();
 const { UserCollection } = require("../db");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const zod = require("zod");
 
 //following route can be accessed using http://localhost:port/user/signup
 userRouter.post("/signup", async function (req, res) {
+  //Verify request body using zod
+  const requiredBody = zod.object({
+    email: zod.string().email(),
+    password: zod.string().min(3).max(10),
+  });
+
+  const safeparsedBody = requiredBody.safeParse(req.body);
+
+  if (!safeparsedBody.success) {
+    console.log(`Request body is not in proper format`);
+    res.status(403).json({
+      message: `Data format is invalid`,
+      error: safeparsedBody.error,
+    });
+    return;
+  }
+
+  //read the request
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const email = req.body.email;
@@ -55,8 +74,23 @@ userRouter.post("/signup", async function (req, res) {
 
 //following route can be accessed using http://localhost:port/user/signin
 userRouter.post("/signin", async function (req, res) {
-  const firstName = req.body.firstName;
-  const lastName = req.body.lastName;
+  //Verify request body using zod
+  const requiredBody = zod.object({
+    email: zod.string().email(),
+    password: zod.string().min(3).max(10),
+  });
+
+  const safeparsedBody = requiredBody.safeParse(req.body);
+
+  if (!safeparsedBody.success) {
+    console.log(`Request body is not in proper format`);
+    res.status(403).json({
+      message: `Data format is invalid`,
+      error: safeparsedBody.error,
+    });
+    return;
+  }
+
   const email = req.body.email;
   const password = req.body.password;
 
